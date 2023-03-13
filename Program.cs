@@ -11,7 +11,7 @@
         MyPerson.Show(MyWorld, new Point(10,10));
 
         MyPerson.GetSick();
-        MyPerson.Show(MyWorld, new Point(15,15));
+        MyPerson.Show(MyWorld, new Point(25,25));
 
         Console.ReadKey();
     }
