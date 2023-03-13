@@ -2,6 +2,6 @@
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("This is a Covid-19 simulator");
+        Console.WriteLine("This is a Covid-19 simulator made by Tanja");
     }
 }
