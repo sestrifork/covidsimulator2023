@@ -15,6 +15,8 @@ class SquaredIsland : ConsoleCanvas, Island
         IslandPopulation = new SmallPopulation(); 
     }
 
+    /*hej hej, pls virk github*/
+
     public void Show()
     {
         DrawMaxFrame();
