@@ -2,18 +2,37 @@
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("This is a Covid-19 simulator");
-        SquaredIsland MyWorld ;
-        MyWorld = new SquaredIsland();
+
+        Virus Covid19 = new Virus(4);        
+        Island MyWorld = new SquaredIsland(Covid19);
+
+        MyWorld.PopulateWithRandomPositionedPersons(200);
         MyWorld.Show();
 
-        CovidPerson MyPerson;
-        MyPerson = new CovidPerson();
-        MyPerson.Show(MyWorld, new Point(10,10));
-
-        MyPerson.GetSick();
-        MyPerson.Show(MyWorld, new Point(25,5));
-
         Console.ReadKey();
+
+        MyWorld.GetRandomPerson().GetSick();
+
+
+        ConsoleKeyInfo pressedKey ;
+        
+        void dostuff() {
+            MyWorld.NewDay();
+            MyWorld.MovePeople();
+            MyWorld.Contiminate(Covid19);
+            MyWorld.ShowHeader();
+        }
+
+        do {
+            dostuff();
+            pressedKey = Console.ReadKey();
+            while (pressedKey.Key == ConsoleKey.A) {
+                Thread.Sleep(500);
+                dostuff();
+                if (Console.KeyAvailable) {
+                    pressedKey = Console.ReadKey();
+                }
+            }
+        } while (pressedKey.Key != ConsoleKey.Escape);
     }
 }

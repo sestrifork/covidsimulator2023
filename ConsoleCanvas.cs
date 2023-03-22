@@ -1,4 +1,12 @@
-public record Point(int X, int Y);
+public class Point
+{
+    public Point(int x, int y) {
+        X = x;
+        Y = y;
+    }
+    public int X { set; get; }
+    public int Y { set; get; }
+}
 
 public class ConsoleCanvas
 {
@@ -56,15 +64,18 @@ public class ConsoleCanvas
     }
 
     public void DrawElement(Point Location, Object Value) {
+        if (Location.Y<0 || Location.X<0) return;
         Console.CursorTop = Location.Y;
         Console.CursorLeft = Location.X;
         Console.WriteLine(Value.ToString());
     }
     
     public void DrawElement(Point Location, Object Value, ConsoleColor BorderColor) {
-        Console.ForegroundColor = BorderColor;
-        DrawElement(Location, Value);
-        Console.ResetColor();
+        if (Location.X>0 && Location.X<Width && Location.Y>0 && Location.Y<Height) {
+            Console.ForegroundColor = BorderColor;
+            DrawElement(Location, Value);
+            Console.ResetColor();
+        }
     }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

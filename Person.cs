@@ -1,30 +1,52 @@
 interface Person {
-    void Show(Island TheIsland, Point TheLocation);
+    void Show(Island TheIsland);
 }
 
-class CovidPerson : Person
+public class CovidPerson : Person
 {
-    static int heads = 1;
-
     enum Situation {
         Healthy,
         Sick,
         HealthyImun,
         VacinatedImun
     }
+    private Situation _covidStatus;
 
-    private Situation covidStatus;
-
-    public CovidPerson() {
-        covidStatus = CovidPerson.Situation.Healthy;
+    Point _location;
+    public CovidPerson(Point TheLocation) {
+        _covidStatus = CovidPerson.Situation.Healthy;
+        _location = TheLocation;
     }
+
+    public CovidPerson() : this(new Point(1,1)) {}
     
-    public void GetSick(){
-        covidStatus = CovidPerson.Situation.Sick;
+    public void GetSick() => _covidStatus = CovidPerson.Situation.Sick;
+    
+    public bool IsSick() {
+        return _covidStatus == CovidPerson.Situation.Sick;
     }
-    public void Show(Island TheIsland, Point TheLocation) {
+
+    public void Move(Island TheIsland, int movex, int movey)
+    {
+           _location.X += movex;
+           _location.Y += movey;
+    }
+
+    public void HideMoveShow(Island TheIsland, int movex, int movey)
+    {
+        if (TheIsland.IsPointInside(_location.X+movex, _location.Y+movey)) { 
+            TheIsland.DrawElement(_location, " ");
+            Move(TheIsland, movex, movey);
+            Show(TheIsland);
+            TheIsland.ShowHeader();
+        }
+    }
+
+
+    public void Show(Island TheIsland) 
+    {
         ConsoleColor theColor;
-        switch(covidStatus) 
+        switch(_covidStatus) 
         {
             case CovidPerson.Situation.Healthy:
                 theColor = ConsoleColor.Green;
@@ -36,11 +58,28 @@ class CovidPerson : Person
                 theColor = ConsoleColor.White;
             break;
         }
-        TheIsland.DrawElement(TheLocation, this, theColor);
+        TheIsland.DrawElement(_location, this, theColor);
     }
 
     public override String ToString()
     {
-        return "#";
+        switch(_covidStatus) 
+        {
+            case CovidPerson.Situation.Healthy:     return "o";
+            case CovidPerson.Situation.Sick:        return "x";
+            default:                                return "#";
+        }        
     }
-} 
+    public bool IsPersonOnThisPoint(Point ThePoint)
+    {
+        return (_location.X == ThePoint.X && _location.Y == ThePoint.Y);
+    }
+    public Point GetLocation() {
+        return _location;
+    }
+
+    public double DistanceTo(CovidPerson ThePerson) {
+        //Teknisk gæld
+        return Math.Sqrt(Math.Pow(Math.Abs(_location.X-ThePerson.GetLocation().X),2) + Math.Pow(Math.Abs(_location.Y-ThePerson.GetLocation().Y),2));
+    }
+}
