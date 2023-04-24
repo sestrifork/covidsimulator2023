@@ -1,38 +1,42 @@
-﻿internal class Program
+﻿class Program
 {
     private static void Main(string[] args)
     {
 
-        Virus Covid19 = new Virus(4);        
-        Island MyWorld = new SquaredIsland(Covid19);
+        Virus Covid19 = new Virus(4);
+        SquaredIsland MyWorld = new SquaredIsland(Covid19);
 
-        MyWorld.PopulateWithRandomPositionedPersons(200);
+        int desiredPopulationSize = args.Length == 1 ? Convert.ToInt32(args[0]) : 100;
+        MyWorld.PopulateWithRandomPositionedPersons(desiredPopulationSize);
         MyWorld.Show();
 
         Console.ReadKey();
-
+        
         MyWorld.GetRandomPerson().GetSick();
 
-
-        ConsoleKeyInfo pressedKey ;
-        
-        void dostuff() {
+        void NextDay() {
             MyWorld.NewDay();
+            MyWorld.CreateChildren();
             MyWorld.MovePeople();
-            MyWorld.Contiminate(Covid19);
+            MyWorld.Contaminate(Covid19);
             MyWorld.ShowHeader();
         }
 
-        do {
-            dostuff();
+        ConsoleKeyInfo pressedKey;
+        do
+        {
+            NextDay();
             pressedKey = Console.ReadKey();
             while (pressedKey.Key == ConsoleKey.A) {
-                Thread.Sleep(500);
-                dostuff();
+                Thread.Sleep(150);
+                NextDay();
                 if (Console.KeyAvailable) {
                     pressedKey = Console.ReadKey();
                 }
             }
         } while (pressedKey.Key != ConsoleKey.Escape);
+
+
     }
 }
+// Thomas

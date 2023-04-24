@@ -5,17 +5,17 @@ public class Virus
         _radius = TheRadius;
     }
 
-    public void Contiminate(ref CovidPerson TheFirstPerson, ref CovidPerson TheSecondPerson)
+    public void Contaminate(ref CovidPerson TheFirstPerson, ref CovidPerson TheSecondPerson)
     {
-        // Check if one of the two persons is sick
-        if ((TheFirstPerson.IsSick() && !TheSecondPerson.IsSick()) ||
-            (!TheFirstPerson.IsSick() && TheSecondPerson.IsSick())) 
+        if (TheFirstPerson.DistanceTo(TheSecondPerson) < _radius)
         {
-            if (TheFirstPerson.DistanceTo(TheSecondPerson) < _radius) {
-                // Tekninsk gæld!
-                TheFirstPerson.GetSick();
+            if (TheFirstPerson.IsSick() && TheSecondPerson.IsHealthy()) {
                 TheSecondPerson.GetSick();
+            }
+            else if (TheFirstPerson.IsHealthy() && TheSecondPerson.IsSick()) {
+                TheFirstPerson.GetSick();
             }
         }
     }
+
 }
