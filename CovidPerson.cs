@@ -30,7 +30,7 @@ public class CovidPerson : IPerson
         _sex = TheSex;
         _daysSick = 0;
     }
-    
+
     public void GetSick() => _covidStatus = CovidPerson.Situation.Sick;
     public void GetHealthyImun() => _covidStatus = CovidPerson.Situation.HealthyImun;
 
@@ -61,13 +61,13 @@ public class CovidPerson : IPerson
 
     public void Move(SquaredIsland TheIsland, int movex, int movey)
     {
-           _location.X += movex;
-           _location.Y += movey;
+        _location.X += movex;
+        _location.Y += movey;
     }
 
     public void HideMoveShow(SquaredIsland TheIsland, int movex, int movey)
     {
-        if (TheIsland.IsPointInside(_location.X+movex, _location.Y+movey)) { 
+        if (TheIsland.IsPointInside(_location.X + movex, _location.Y + movey)) {
             TheIsland.DrawElement(_location, " ");
             Move(TheIsland, movex, movey);
             Show(TheIsland);
@@ -75,34 +75,34 @@ public class CovidPerson : IPerson
         }
     }
 
-    public void Show(SquaredIsland TheIsland) 
+    public void Show(SquaredIsland TheIsland)
     {
         ConsoleColor theColor;
-        switch(_covidStatus) 
+        switch (_covidStatus)
         {
             case CovidPerson.Situation.Healthy:
                 theColor = ConsoleColor.Green;
-            break;
+                break;
             case CovidPerson.Situation.Sick:
                 theColor = ConsoleColor.DarkRed;
-            break;
+                break;
             default:
                 theColor = ConsoleColor.White;
-            break;
+                break;
         }
         TheIsland.DrawElement(_location, this, theColor);
     }
 
     public override String ToString()
     {
-        switch(_sex) 
+        switch (_sex)
         {
-            case CovidPerson.Gender.Male:           return "\u2642";
-            case CovidPerson.Gender.Female:         return "\u2640";
-            case CovidPerson.Gender.GenderNeutral:  return "n";
-            case CovidPerson.Gender.Child:          return "c";
-            default:                                return "#";
-        }        
+            case CovidPerson.Gender.Male: return "\u2642";
+            case CovidPerson.Gender.Female: return "\u2640";
+            case CovidPerson.Gender.GenderNeutral: return "n";
+            case CovidPerson.Gender.Child: return "c";
+            default: return "#";
+        }
     }
 
     public bool IsPersonOnThisPoint(Point ThePoint)
@@ -115,9 +115,7 @@ public class CovidPerson : IPerson
     }
 
     public double DistanceTo(CovidPerson ThePerson) {
-        //Teknisk gæld
-        return Math.Sqrt(Math.Pow(Math.Abs(_location.X-ThePerson.GetLocation().X),2) + Math.Pow(Math.Abs(_location.Y-ThePerson.GetLocation().Y),2));
+        return Math.Sqrt(Math.Pow(Math.Abs(_location.X - ThePerson.GetLocation().X), 2) + Math.Pow(Math.Abs(_location.Y - ThePerson.GetLocation().Y), 2));
     }
-
 
 }

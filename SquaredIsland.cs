@@ -24,8 +24,8 @@ public class SquaredIsland : ConsoleCanvas, IIsland
     private Random _randomizer;
     private Virus _virus;
 
-    private int _dayNo;
-    private int _peopleInfected;
+    public int _dayNo;
+    public int _peopleInfected;
     private int _peopleImmune;
 
     public SquaredIsland(Virus TheVirus) : base()
@@ -125,7 +125,6 @@ public class SquaredIsland : ConsoleCanvas, IIsland
             }
         }
     }
-
     private void CreateChildIfPossible(CovidPerson parent1, CovidPerson parent2)
     {
         if (parent1.IsMale() && parent2.IsFemale() ||
@@ -186,5 +185,10 @@ public class SquaredIsland : ConsoleCanvas, IIsland
         }
     }
 
-
+    public int PopulationCount()
+    {
+        return _islandPopulation.Count();
+    }
 }
+
+
